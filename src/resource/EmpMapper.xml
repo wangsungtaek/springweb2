@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="springweb2.mvc.dao.A01_EmpDao">
+	
+	<resultMap type="emp" id="empResult"/>
+	<select id="emplist" resultMap="empResult" parameterType="emp">
+ 		Select * from emp01
+ 		WHERE 1=1
+		AND ename like '%'||upper(#{ename})||'%'
+		AND job like '%'||upper(#{job})||'%'
+		order by empno desc
+ 	</select>
+ 	
+ 	<select id="totCnt" resultType="int">
+ 		select count(*) from emp01 	
+ 	</select>
+ 	
+ 	<select id="getEmp" resultType="emp" parameterType="int">
+		SELECT *
+ 	 	from emp01
+ 	  	WHERE empno=#{empno}
+ 	</select>
+ 	
+ 	<resultMap type="int" id="intRs" />
+	<select id="searchEmp3" resultMap="intRs" parameterType="hashmap">
+		SELECT empno
+		from emp01
+		WHERE sal BETWEEN #{start} AND #{end}
+	</select>
+	<!-- public void empInsert(Emp dto) -->
+	<insert id="empInsert" parameterType="emp">
+ 		INSERT INTO emp01 VALUES(emp01_seq.nextval, #{ename},
+ 		#{job}, #{mgr}, SYSDATE, #{sal}, #{comm}, #{deptno})
+	</insert>
+
+	<resultMap type="empdept" id="edMap"/>
+	<select id="schEDGList" resultMap="edMap" parameterType="empdept">
+		SELECT e.*, dname, loc, grade
+		FROM EMP01 e, DEPT d, SALGRADE s
+		WHERE e.deptno = d.deptno
+		AND e.sal BETWEEN s.losal AND s.hisal
+		<if test="job!=null and job!=''">
+		AND job = #{job}
+		</if>
+		<if test="deptno!=0">
+		AND e.deptno = #{deptno}
+		</if>
+		<if test="grade!=null and grade!=''">
+		AND grade = #{grade}
+		</if>
+	</select>
+	
+	<resultMap type="dept" id="deptMap"/>
+	<select id="getDepts" resultMap="deptMap">
+		SELECT * FROM DEPT
+	</select>	
+
+	<resultMap type="String" id="strMap"/>
+	<select id="getJobs" resultMap="strMap">
+		SELECT DISTINCT job FROM emp
+	</select>
+	
+	<select id="getMgrs" resultMap="empResult">
+		SELECT DISTINCT e.mgr, m.ename
+		FROM emp e, emp m
+		WHERE e.mgr = m.empno
+	</select>
+	
+</mapper>

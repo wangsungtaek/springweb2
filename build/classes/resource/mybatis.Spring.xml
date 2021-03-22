@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="emp" type="springweb2.z02_vo.Emp"/>
+		<typeAlias alias="dept" type="springweb2.z02_vo.Dept"/>
+		<typeAlias alias="empdept" type="springweb2.z02_vo.EmpDept"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="resource/EmpMapper.xml" />
+		<mapper resource="resource/DeptMapper.xml" />
+	</mappers>
+</configuration>

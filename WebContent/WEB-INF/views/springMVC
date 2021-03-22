@@ -1,0 +1,195 @@
+# 스프링 화면 처리 프로세스
+
+[서버]
+	특정위치에 WAS(web application server) 구동..
+[클라이언트]
+1 http://ip주소/도메인명:7080/springweb/start.do url
+[서버]
+2. web.xml
+	.do 를 확인해서 front controller인
+	DispatcherServlet.java(framwork)
+3. dispatcher-servlet.xml을 호출하여,
+	해당하는 컨테이너에 등록된 객체를 확인하고,
+	메모리에 로딩된 객체를 찾는다.
+	controller/service/dao
+	context:component-scan basePackage=""
+	framwork : mybatis(DB)
+	이 중에서 requestMapping("/start.do")가 있는 controller의
+	기능 메서드 찾기.
+4. [controller: 주소호출]위에 등록된 객체 안에서 url 패턴이 /start.do
+	인 것인 기능메서드를 찾는다.
+	@RequestMapping("/start.do")
+	해당 controller의 기능메서드를 수행해준다.
+	
+5. [controller:요청값처리]해당 기능 메서드에서 요청값과 Model값 설정은 매개변수로 받을 수 있다.
+	public String start(@RequestParam("name") String name, Model d)
+						Person s
+						@ModelAttribute("sch") Person s
+						
+6. [controller:모델데이터처리]
+	public String start(Model d)
+	d.addObject("모델key", 모델객체);
+	모델객체 : Service --> Dao --> mybatis Framework --> DB Server
+7. [controller: view단 호출]해당 기능 메서드에 문자열로 리턴된 
+	view단으로 화면이 호출된다.
+	return "jsp파일 위치"; 
+	ModelAndView : model+view
+8. [view]
+	${모델명.프로퍼티} ${emp.ename} == emp.getEname()
+					 	cf) mybatis #{ename}
+9. [최종] dispatcherServlet 최종으로 클라이언트 전달.
+[클라이언트]
+10. 서버에서 만들어진 화면을 response객체로 전달되어 client에
+	html로 전달하면, 브라우저에서는 해당 js/html/css코드를
+	실행 및 랜더링하여 출력한다.
+
+	
+# 스프링 핵심 구현
+1. front controller 선언
+	DispatcherServlet
+	
+2. 사용할 container 선언
+	DispatcherServlet의 설정 값 처리 xml :
+	IOC (Inversion Of Controle) 개발자 ==> 컨테이너 통제를 맡김
+		- DI(Dependency Injection) - 의존성 주입
+			ex) autowiring : 객체 vs 객체 메모리에 로딩된 상황에서
+				의존성이 있는 객체는 해당 객체에 메모리에 할당(주입)
+				Controller안
+				@Autowired
+				private Service service;
+				
+		- DL(Dependency Lookup) - 의존된 내용을 id/name으로 설정된
+			객체를 찾는 작업
+	dispatcher-servlet.xml : 여기에 선언하는 객체 활용 방식을 정확하게 파악하고
+	설정할 수 있어야 원활하게 스프링을 코딩하고 설정할 수 있다.
+	bean클래스 선언을 통해서 tomcat이 시작되어
+	첫번째 호출 될 때, 사용할 객체 메모리로 로딩.
+		- Controller를 등록 처리.
+	- 사용자 정의 객체에 대한 로딩
+		controller/service/doa단 설정위치 처리
+	- framework에 지원되는 여러 클래스를 객체로 로딩 처리
+		주로 활용되는 내용
+		공통 controller/service/doa단 설정위치 처리
+		소스에서 호출하여 처리 방법 선언 : Anootation 코드를 autowire로
+		여러가지 viewResolver의 등록 처리(json, 파일업로드/다운로드..)
+		database베이스 처리 framework 등록(mybatis)
+		사용할 공통 key값 등록 호출.(연결할 서버 정보-DB서버, 파일서버, 메일서버)
+		다국어 처리 모듈 등록.
+		배치 파일 모듈 등록
+		
+		
+		
+3. spring MVC
+	- Controller : java 클래스로 선언
+		controller --> service --> dao(인터페이스) --> DB 서버
+						비지니스로직처리
+						
+		controller <-- service <-- dao(실객체)
+						비지니스로직처리
+						
+	- Model : controller 안에 선언
+		화면단에 보내줄 핵심 데이터 처리
+		# model데이터를 만들기 위해 도와 주는 Process 객체들!!
+		- service 
+			핵심 비지니스 로직 처리
+				등록/수정/삭제/데이터베이스 가져오기 등,
+				사용될 핵심 로직을 처리한다.(조건/반복문활용)
+				모델데이터를 만들기위한 작업 처리.
+		- dao(database access object)
+			
+	- View : jsp 파일 controller에서 호출
+		스프링의 view는 외부에서 url로 접근하지 못하고,
+		controller를 통해서만 접근이 가능하게 처리한다.
+		WebContent\WEB-INF : 아무나 접근 불가
+		ps) css/js관련 기본 설정내용, 이미지는
+		WebContent 하위에 있어야지 소스내에서
+		${Path}/경로/파일명 접근이 가능하다.
+
+4. DI
+	컨테이너에 사용할 객체 선언방법, 여러가지 효과적인 기능처리 선언방법
+
+5. 데이터베이스 처리(DAO-mybatis 프레임웍활용)
+	1) 컨테이너에 선언 방법(connection)
+		- 연결객체
+		- mybatis공통 xml 위치
+		- dao 인터페이스 위치 : 컨테이너에서 지정해야지,
+			mybatis framework에서 실제 객체를 만들어 준다.
+			
+			
+	2) mybatis공통 설정 xml
+	3) 기능별 sql xml 설정 방법
+	4) mybatis 프레임웍을 통해서 실제객체를 만들어 주는
+		dao interface 선언 패키지
+	5) XXXmapper.xml vs DAO인터페이스 mapping
+		dao 인터페이스 --> namespace
+		메서드명 --> id
+		리턴값 --> resultMap/resultType
+		매개변수 --> parameterMap/parameterType
+		
+		
+6. MVC 중급
+	1) 여러가지 viewer 활용 
+		- ajax를 json처리 ==> jqeury plugin 활용
+		- 파일업/다운로드
+		- 엑셀 다운로드
+	2) 유효성 처리/예외 처리
+	3) session 처리
+	4) 다국어 처리:하나의 페이지에서 설정값에 의해 여러나라의 언어를
+		지원 처리..
+7. AOP
+	관점 지향적 프로그래밍 처리..	
+	
+8. 실무 예제
+	1) 답변형 게시판
+		- 계층 구조 테이블 설계
+		- 파일을 첨부하여 게시물 작성과 등록
+		- 페이지 처리 로직
+		- 답글에 따른 계층적 list 처리
+	2) 메일 발송
+	3) ajax를 통한 fullcalender(jquery lib활용) 처리
+	4) vue와 연동하여 데이터 처리.
+		
+# 환경 설정 순서
+1. lib 복사
+2. http://localhost:7080/springweb/start.do
+	- 호출되었을 때, 스프링 프레임웍에 의해서 controller가
+	호출 되고, view단이 출력되게 처리한다.
+	- 사용하게 될 controller를 컨테이너에 등록 dispatcher-servlet.xml
+	- controller에 @Controller를 선언
+	
+3. 스프링 프레임웍의 첫단추인 front 컨트롤단 호출
+	.do를 통해서
+	
+4. /start.do url을 통해서 mapping되어 있는 controller
+	의 기능 메서드 호출..
+5. 해당 기능 메서드의 return "view 자원 위치"
+	통해서 view호출
+# controller의 세부 사항
+1. 요청값
+	- 한개의 요청값 받기
+	- 객체로 요청값 받기
+2. 모델데이터처리
+3. 뷰단호출
+	- 문자열로 실행할 view단을 호출 forward처리(request, response전달)
+	- 선언된 controller의 mapping된 기능메서드 호출
+		- redirect : /선언된url.do
+		- forward : /선언된url.do
+	- 여러가지 viewer호출 : json/파일업로드/파일다운로드/pdf.excel파일 처리 
+4. 요청값 + 모델처리 : Modelattribute
+5. 모델 + 뷰단처리 : ModelAndView
+
+# 요청값 처리..
+&name=홍길동
+1. request.getParameter("name")
+	form(@RequestParam("name") String name)
+	요청값을 name의 key String name에 할당하여 가져올 수 있다.
+2. 객체로 요청값 처리
+
+
+# ModelAttribute
+1. controller단의 공통 모델데이터에 대한 선언.
+	- 하나의 업무단위로 controller를 쓰고,
+	- 하나의 기능단위로 mapping을 처리한다.
+	ex) 사원정보 처리 - 리스트, 상세화면, 등록/수정/삭제
+		부서정보 콤보박스, 관리자정보 콤보박스,
+2. 요청값+모델데이터를 동시에 처리
