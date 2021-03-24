@@ -78,3 +78,6 @@ INSERT INTO member5 values('prettyman', '5555', '김현석', 1200, '인천 계�
 INSERT INTO member5 values('whitewolf', '6666', '마동길', 5000, '경기 수원', sysdate, 'quest');
 
 SELECT * FROM member5;
+
+CREATE TABLE emp01 AS SELECT * FROM emp;
+SELECT * FROM emp01;

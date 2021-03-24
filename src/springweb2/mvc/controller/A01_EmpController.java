@@ -21,7 +21,7 @@ public class A01_EmpController {
 	@Autowired(required = false)
 	private A01_EmpService service;
 	
-	// http://localhost:7080/springweb/empList2.do
+	// http://localhost:7080/springweb2/empList2.do
 	@RequestMapping("/empList2.do")
 	public String empList2(@ModelAttribute("sch") Emp sch, Model d) {
 		System.out.println("데이터 건수 : " +service.emplist(sch).size());

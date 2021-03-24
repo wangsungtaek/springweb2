@@ -4,10 +4,24 @@
 	기존 jsp보다 효과적인 json데이터를 처리하고 요청 프로세스를
 	받을 수 있다.
 	1) 프로세스
-	브라우저 화면 ==> 이벤트를 통한 요청 데이터 호출 ==> 스프링
-	기반 서버 ==> 요청데이터를 json형식으로 전달 ==> jquery에서
+	브라우저 화면 ==> 초기 화면 로딩 ==>
+	이벤트를 통한 요청 데이터 호출 ==> 스프링
+	기반 서버 ==> 요청데이터를 json형식으로 전달 ==>
+	jquery에서
 	받은 json데이터 DOM 생성 코드를 통해서 화면에 출력 처리..
-	
+	2) 개발 순서
+	컨테이너에 json데이터 처리 view bean 선언(pageJsonReport)
+	spring 기본 초기화면 controller, view단 생성
+	비동기에 의해 필요로 하는 데이터 처리 sql 작성
+	dao 작성
+	XXXmapper.xml 작성
+	service
+	controller에서 해당 기본 데이터 호출 화면에 로딩(json데이터 화면)
+	spring 기본 초기화면에서 event 처리 jquery ajax호출 코드를 통해서
+		controller에 mapping되어 있는 데이터 처리 호출.
+		$.ajax({속성:속성값...});
+		succeess:function(data){}
+		data를 통해 받은 json데이터를 DOM객체 생성 코드를 통해서 처리 완료.
 	
 2. 스프링에서 ajax를 위해서 처리해야할 부분
 	1) server단에서 사용하는 객체형식은 json형식을 문자열로 생성한다.

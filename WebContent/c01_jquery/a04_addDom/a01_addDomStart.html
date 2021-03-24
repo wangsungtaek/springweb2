@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="/springweb2/a00_com/jquery-3.5.1.js"></script>
 <script>
 /*
 # DOM 추가 처리하는 기능 함수들..
@@ -12,11 +13,31 @@
 2. 추가할 태그나 DOM.appendTo(추가할 대상객체)
 	ex) $("<h2>좋은날</h2>").appendTo("div");
 3. 요소객체.prepend("요소객체의 접두로 추가처리.")
- 
+	"접두로 추가할 내용". prependTo(요소객체)
 */
+	$(document).ready(function(){
+		$("h2").text("추가처리 기능 함수들");
+		$("#appendFun").click(function(){
+			$(".inner").append("<span>장군</span>");
+		})
+		$("#appendToFun").click(function(){
+			$("<span>영웅</span>").appendTo(".inner");
+		})
+		$("#prependFun").click(function(){
+			$(".inner").prepend("<span>멋진</span>");
+		})
+	})
 </script>
 </head>
 <body>
-
+	<h2></h2>
+	<h4 id="appendFun">append처리</h4>
+	<h4 id="appendToFun">appendTO처리</h4>
+	<h4 id="prependFun">prepend처리</h4>
+	<h3>영웅들</h3>
+	<div class="container">
+		<div class="inner">이순신</div>
+		<div class="inner">강감찬</div>
+	</div>
 </body>
 </html>
