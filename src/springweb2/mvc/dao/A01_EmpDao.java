@@ -18,4 +18,5 @@ public interface A01_EmpDao {
 	public ArrayList<String> getJobs();
 	public ArrayList<Emp> getMgrs();
 	public ArrayList<Dept> getDepts();
+	
 }

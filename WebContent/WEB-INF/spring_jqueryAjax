@@ -1,0 +1,76 @@
+# spring를 통한 ajax처리.
+1. 스프링 환경하에 ajax처리 방식
+	스프링에서 웹 환경에서 비동기적으로 ajax를 처리할 수 있는데,
+	기존 jsp보다 효과적인 json데이터를 처리하고 요청 프로세스를
+	받을 수 있다.
+	1) 프로세스
+	브라우저 화면 ==> 이벤트를 통한 요청 데이터 호출 ==> 스프링
+	기반 서버 ==> 요청데이터를 json형식으로 전달 ==> jquery에서
+	받은 json데이터 DOM 생성 코드를 통해서 화면에 출력 처리..
+	
+	
+2. 스프링에서 ajax를 위해서 처리해야할 부분
+	1) server단에서 사용하는 객체형식은 json형식을 문자열로 생성한다.
+		ex) {"속성":"속성값", "속성",숫자형속성}
+		new Person("사과", 3000, 2)
+		==> {"name":"사과", "price":3000, "cnt": 2}
+	2) bean으로 스프링 프레임웍에서 객체를 json문자열로 변환시켜주는
+		viewresolver를 컨테이너에 선언하고, 해당
+		호출객체는(url mapping 메서드)는
+		view단 호출을 이 bean으로 호출하면 model설정된 객체가
+		json문자열로 변환하여 client에 전달한다.
+	3) 처리 순서
+		- 환경 설정
+			container에 bean viewResovler를 등록
+			json view를 등록
+		- controller에서 요청으로 호출하면,
+			return : "선언된 json처리 viewer"
+	4) model데이터의 json데이터 변환 기준
+		m.setAttribute("emp", service.empList(sch));
+		{"emp":"안녕"} 하나의 데이터일때,
+		{"emp":{"empno":7890,"job":"홍길동"...}} : 1개 row단위 데이터
+		{"emp":[{"empno":...,{},{}}] : 다중 row단위 데이터
+
+3. jqeury통한 ajax 통신 데이터 처리.
+	1) 서버단에 전달해온 데이터는 jquery에서 특정 이벤트에 의해,
+		json문자열을 json객체로 변환해서 비동기적으로 활용한다.
+	2) $.ajax({
+			속성:속성값,
+			속성:속성값,
+			success:function(json){
+				// 서버에서 받는 json 객체를 활용할 수 있게 된다.
+			},
+		});
+	3) 속성
+		type : 요청의 전달 방식 get/post방식
+		url : 데이터를 가져올 controller단 mapping url ex) jsonEmp.do
+		data : 서버에 요청할 query String
+			- 순수 query String : "key=value&key=value.."
+			- json객체형 : {key:value, key:value}
+			- form요소 자동 query string 변경 + 한글 encoding처리 :
+				$("form").serialize()
+		dataType : 결과값을 받는 형식을 지정, json.parse(), eval()함수를
+			이용해서 객체형으로 변환하지 않더라도 정상으로 처리가 된다.
+			xml(jsp/html로 DOM화면을 받아서 처리),
+			json(객체변환필요하지 않음), text
+		success:function(data){}
+			정상적으로 받았을 때, 처리할 데이터를 매개변수(data)로 처리할 수 있다.
+			받은 객체를 each구문을 통해서 화면에 DOM객체로 할당 처리한다.
+			controller에서 선언 : m.setAttribute("emp",..);			
+			data.모델명
+			{"emp":"안녕"} 하나의 데이터일때,
+				data.emp ==> "안녕"
+			{"emp":{"empno":7890,"job":"홍길동"...}} : 1개 row단위 데이터
+				data.emp.empno ==> 7890
+				var emp = data.emp
+				emp.empno // emp.ename // emp.job ...
+			{"emp":[{"empno":...,{},{}}] : 다중 row단위 데이터
+				var empList = data.emp
+				$(empList).each(function(idx, emp, array){
+					
+				});
+			
+		error:function(err){}
+			에러를 발생했을 때, 처리할 함수정의
+	
+		

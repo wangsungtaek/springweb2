@@ -57,3 +57,24 @@ SELECT * FROM emp01;
 CREATE SEQUENCE EMP01_SEQ
 	START WITH 8000
 	INCREMENT BY 1;
+SELECT * FROM EMP;
+SELECT * FROM dept;
+CREATE TABLE dept2 AS
+SELECT * FROM dept;
+
+CREATE TABLE member5 (
+	id varchar2(50),
+	pass varchar2(50),
+	name varchar2(30),
+	point NUMBER,
+	address varchar2(50),
+	regdte DATE,
+	auth varchar2(30)
+);
+INSERT INTO member5 values('himan', '7777', '홍길동', 1000, '서울 강남', sysdate, 'admin');
+INSERT INTO member5 values('higirl', '8888', '심영희', 1500, '충청 대전', sysdate, 'user');
+INSERT INTO member5 values('goodman', '9999', '김철수', 200, '서울 방배', sysdate, 'user');
+INSERT INTO member5 values('prettyman', '5555', '김현석', 1200, '인천 계양', sysdate, 'user');
+INSERT INTO member5 values('whitewolf', '6666', '마동길', 5000, '경기 수원', sysdate, 'quest');
+
+SELECT * FROM member5;

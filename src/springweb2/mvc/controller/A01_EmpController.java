@@ -48,7 +48,7 @@ public class A01_EmpController {
 	@PostMapping("/insertEmp.do")
 	public String insertEmp(@ModelAttribute("emp") Emp ins) {
 		service.empInsert(ins);
-		ins = null;
+		ins.setEname("");;
 		return "WEB-INF/views/a02_mvc/a01_empInsertForm.jsp";
 	}
 	
