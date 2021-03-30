@@ -29,6 +29,7 @@
 	});
 </script>
 </head>
+<body>
 <div class="jumbotron text-center">
 	<h2>물품 구매</h2>
 </div>

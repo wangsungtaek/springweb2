@@ -7,3 +7,5 @@ pass=tiger
 test=scott
 # driver dburl user pass pass test
 # 파일 서버 정보
+upload=/Users/wangsungtaek/taek/project/springweb2/WebContent/z01_upload/
+tmpUpload=/Users/wangsungtaek/taek/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/springweb2/z01_upload/
