@@ -12,12 +12,20 @@
 		SELECT id, title,
 						to_char(start1, 'YYYY-MM-DD"T"HH24:MI:SS') start1,
 						to_char(end1, 'YYYY-MM-DD"T"HH24:MI:SS') end1,
+						writer,
+						content,
 						allDay,
 						textColor,
 						backgroundColor,
 						borderColor
 		FROM calendar
-	
 	</select>
-
+	
+	<insert id="insertCalendar" parameterType="calen">
+		INSERT INTO calendar
+		VALUES(cal_seq.nextval, '', '4월의 시작', '마길동', '내용',
+				to_date('2021/04/02','YYYY/MM/DD'),
+				to_date('2021/04/03','YYYY/MM/DD'),
+				1, 'white', 'navy', 'red')
+	</insert>
 </mapper>

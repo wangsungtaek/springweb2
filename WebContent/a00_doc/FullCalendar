@@ -52,9 +52,9 @@
 			arg는 이벤트를 통한 해당 날짜(시작/마지막/종일여부)
 				속성을 가져온다.
 			arg 객체의 속성들
-			arg.start : 선택한 시작 날짜
-			arg.end : 선택한 마지막 날짜
-			arg.allDay : 종일일정여부
+			arg.start : 선택한 시작 날짜(new Date() 객체)
+			arg.end : 선택한 마지막 날짜(new Date() 객체)
+			arg.allDay : 종일일정여부(날짜/시간) boolean
 			calendar.addEvent(추가할 일정을 json형식);
 			매개변수로 받은 일정을 화면에 반영하기 위한 일정 추가
 			이벤트 처리.
@@ -129,5 +129,37 @@ create sequence cal_gp_seq
 	minvalue 1
 	maxvalue 99999;
 	
-	
-	
+# 캘린더 등록 처리.
+1. 화면 처리 방식 결정
+	1) 등록할 속성값 지정
+		id [DB]
+		groupId [DB]
+		title [입력]
+		writer [입력]
+		content [입력]
+		start [full api]
+		end [full api]
+		allDay [full api]
+		textColor [입력]
+		backgroundColor [입력]
+		borderColor [입력]
+		
+	2) 등록할 화면 로딩(dialogue-jquery ui/bootstrap으로 처리)
+		위에 있는 입력항목에 대하여
+		ex1) form에 넣고, jqeury ui dialoue 화면처리..
+		ex2) fomr에 넣고, bootstrap으로 dialoue 화면처리..
+
+
+
+
+
+
+
+	3) 등록버튼 클릭시, ajax 처리
+		"등록":function(){
+		부분에 등록 버튼 클릭시, 처리할 ajax를 선언합니다.
+		- 우선, 전달할 데이터를 json형식으로 정리
+		- calendar.addEvent(추가할 json 데이터) : 화면 반영
+		- $.ajax();를 통해서 서버에 요청값으로 전달.
+		
+		

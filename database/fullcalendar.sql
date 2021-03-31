@@ -47,3 +47,5 @@ SELECT id, title,
 			backgroundColor,
 			borderColor
 FROM calendar;
+
+SELECT * FROM calendar;

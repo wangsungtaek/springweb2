@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import springweb2.mvc.service.A04_CalenService;
+import springweb2.z02_vo.Calendar;
 
 @Controller
 @RequestMapping("calendar.do")
@@ -26,4 +27,11 @@ public class A04_CalendarController {
 		d.addAttribute("list", service.calenList());
 		return "pageJsonReport";
 	}
+	
+	// http://localhost:7080/springweb2/calendar.do?method=insert
+		@GetMapping(params="method=insert")
+		public String insert(Calendar cal) {
+			service.insertCalendar(cal);
+			return "WEB-INF/views/a03_ajax/a04_fullcalendar.jsp";
+		}
 }
