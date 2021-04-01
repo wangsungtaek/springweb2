@@ -89,7 +89,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		selectMirror : true,
 		// 이벤트명:function(){} : 각 날짜에 대한 이벤트를 통해 처리할 내용.
 		select : function(arg) {
-			opts.button={
+			// 화면에 보이는 형식 설정.
+			// 클릭한 날짜를 전역변수에 할당/시작일과 마지막을 date형식으로 할당.
+			date.start = arg.start;
+			date.end = arg.end;
+			
+			opts.buttons={
 				"등록":function(){
 					var sch = callSch();
 					console.log("#등록할 데이터#");
@@ -99,38 +104,74 @@ document.addEventListener('DOMContentLoaded', function() {
 						calendar.addEvent(sch);
 						calendar.unselect();
 					}
-					$("#schDialog").dialog("close");
 					// ajax 처리. (DB 등록)
 					$.ajax({
+						type:'post',
+						url:'${path}/calendar.do?method=insert',
+						dataType:'json',
 						data:sch,
 						success:function(data){
 							if(data.success=="Y"){
 								alert("등록 성공");
 							}
+						},
+						error:function(err){
+							console.log(err);
 						}
-					})
+					});
+					$("#schDialog").dialog("close");
 				}	
 			};
 			$("#schDialog").dialog(opts);
+			console.log(opts);
 			$("#schDialog").dialog("open");
-			// 화면에 보이는 형식 설정.
-			// 클릭한 날짜를 전역변수에 할당/시작일과 마지막을 date형식으로 할당.
-			date.start = arg.start;
-			date.end = arg.end;
+			
 			$('[name=start]').val(arg.start.toLocaleString());
 			$('[name=end]').val(arg.end.toLocaleString());
 			$('[name=allDay]').val(""+arg.allDay);
 			
 		},
 		eventClick : function(arg) {
+			date.start = arg.event.start;
+			date.end = arg.event.end;
 			// 있는 일정을 클릭시,
 			// 상세 화면 보이기(등록되어 있는 데이터 출력)
 			// Ajax를 통해서, 수정/삭제/
 			console.log("#등록된 일정 클릭#");
 			console.log(arg.event);
+			detail(arg.event);
+			opts.buttons={
+				"수정":function(){
+					// 수정 후, json데이터 가져오기..
+					var sch = callSch();
+					// 1. 화면단 처리 변경.
+					// 현재 캘린더 api의 속성 변경하기
+					var event = calendar.getEventById(sch.id);
+					
+					// 속성값 변경 setProp
+					event.setPop("title", sch.title);
+					event.setPop("textColor", sch.textColor);
+					event.setPop("backgroundColor", sch.backgroundColor);
+					event.setPop("borderColor", sch.borderColor);
+					//	확장 속성 :		writer [입력]
+					//					content [입력]
+					event.setExtendedProp("writer", sch.writer);
+					event.setExtendedProp("content", sch.content);
+					event.setAllDay(sch.allDay);
+					
+					$("#schDialog").dialog("close");
+					
+				},
+				"삭제":function(){}
+			}
+			$("#schDialog").dialog(opts);
+			$("#schDialog").dialog("open");
+			/*
 			if (confirm('일정 삭제하시겠습니까?')) {
 				arg.event.remove()
 			}
+			*/
+			
 		},
 		editable : true,
 		dayMaxEvents : true, // allow "more" link when too many events
@@ -156,19 +197,34 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 function callSch() {
 	var sch={};
+	sch.id=$("[name=id]").val();
 	sch.title=$("[name=title]").val();
 	sch.writer=$("[name=writer]").val();
 	sch.content=$("[name=content]").val();
 	// Date타입은 화면에서 사용되는 형식으로 설정하여야 한다.
 	sch.start=date.start.toISOString();
 	sch.end=date.end.toISOString();
-	alert("등록할 시작일:"+sch.start());
 	sch.allDay=$("[name=allDay]").val()=="true";
 	// 문자열이 "true"일 때, 그외는 false
 	sch.backgroundColor=$("[name=backgroundColor]").val(); // 배경색상.
 	sch.textColor=$("[name=textColor]").val();
 	sch.borderColor=$("[name=borderColor]").val();
 	return sch;
+}
+function detail(event){
+	// form 하위 객체에 할당
+	$('[name=id]').val(event.id);
+	$('[name=title]').val(event.title);
+	// calendar에서 추가된 속성들.
+	var exProps = event.extendedProps;
+	$('[name=writer]').val(exProps.writer);
+	$('[name=content]').val(exProps.content);
+	$('[name=start]').val(event.start.toLocaleString());
+	$('[name=end]').val(event.end.toLocaleString());
+	$('[name=allDay]').val(""+event.allDay);
+	$('[name=backgroundColor]').val(event.backgroundColor);
+	$('[name=textColor]').val(event.textColor);
+	$('[name=borderColor]').val(event.borderColor);
 }
 
 $(document).ready(function() {

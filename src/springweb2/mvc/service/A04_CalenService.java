@@ -17,7 +17,13 @@ public class A04_CalenService {
 		return dao.calenList();
 	}
 	
-	public void insertCalendar(Calendar cal) {
-		dao.insertCalendar(cal);
+	public void insertCalendar(Calendar ins) {
+		dao.insertCalendar(ins);
+	}
+	public void updateCalen(Calendar upt) {
+		dao.updateCalendar(upt);
+	}
+	public void deleteCalen(int id) {
+		dao.deletaCalendar(id);
 	}
 }
