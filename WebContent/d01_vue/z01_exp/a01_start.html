@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb2/a00_com/jquery-ui.css" >
+<script src="/springweb2/a00_com/jquery-3.5.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+/*
+# mvvm 패턴에 따라 모델 데이터 물건명 가격 갯수를 할당하는
+화면에 h3로 물건정보를 출력하세요.
+ */
+	$(document).ready(function(){
+		var model = {name:'사과', price:1000, cnt:3};
+		var vm = new Vue({
+			el : "#product",
+			data : model
+		});
+	});
+</script>
+</head>
+<body>
+	<div id="product">
+	<h2>물건명:{{name}}</h2>
+	<h2>가격:{{price}}</h2>
+	<h2>갯수:{{cnt}}</h2>
+	</div>
+</body>
+</html>

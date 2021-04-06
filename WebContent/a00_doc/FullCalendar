@@ -65,7 +65,7 @@
 				end : arg.end,
 				allDay : arg.allDay
 			})
-		# eventClick : 현재 보이는 일정을 클릭시 처리 내용.
+		# eventClick : 현재 보이는 등록된 일정을 클릭시 처리 내용.
 			eventClick : function(arg){
 				# 있는 일정을 클릯, arg.evnet에 있는 속성
 				allDay: true // 종일여부 시간일 때는 false
@@ -148,12 +148,6 @@ create sequence cal_gp_seq
 		위에 있는 입력항목에 대하여
 		ex1) form에 넣고, jqeury ui dialoue 화면처리..
 		ex2) fomr에 넣고, bootstrap으로 dialoue 화면처리..
-
-
-
-
-
-
 
 	3) 등록버튼 클릭시, ajax 처리
 		"등록":function(){

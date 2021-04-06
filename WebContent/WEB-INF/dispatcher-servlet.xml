@@ -83,4 +83,35 @@
 	<bean id="downloadviewer" class="springweb2.z04_util.FileDownloadViewer"/>
 	<!-- 4. 엑셀뷰 viewer -->
 	<!-- 5. pdf뷰 viewer -->
+	
+	<!-- SMTP 서버 설정 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<!-- <property name="username" value="zelratole@gmail.com"/>
+		<property name="password" value="wpffkxhfm88"/> -->
+		<property name="username" value="gun235448@gmail.com"/>
+		<property name="password" value="see010811^^"/>
+		<!-- 보안 관련 설정 -->
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 
+	# 다국어 처리 모듈 등록
+	1. 핵심 클래스 등록 ( 선택 UI를 통해서 다국어를 처리할 때, 활용)
+	2. 다국어 파일 기본 위치 등록
+	 -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>resource.properties.msg</value>
+			</list>
+		</property>
+	</bean>
+	
 </beans>

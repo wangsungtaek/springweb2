@@ -41,14 +41,14 @@ public class A04_CalendarController {
 	@PostMapping(params="method=update")
 	public String update(Calendar upt, Model d) {
 		service.updateCalen(upt);
-		d.addAttribute("", "Y");
+		d.addAttribute("success", "Y");
 		return "pageJsonReport";
 	}
 	// http://localhost:7080/springweb2/calendar.do?method=update
 	@PostMapping(params="method=delete")
 	public String delete(@RequestParam("id") int id, Model d) {
 		service.deleteCalen(id);
-		d.addAttribute("", "Y");
+		d.addAttribute("success", "Y");
 		return "pageJsonReport";
 	}
 }

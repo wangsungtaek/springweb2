@@ -12,9 +12,9 @@
 <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css">
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css">
 <script src="${path}/a00_com/jquery.min.js"></script>
+<script src="${path}/a00_com/jquery-ui.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
 <script src="${path}/a00_com/bootstrap.min.js"></script>
-<script src="${path}/a00_com/jquery-ui.js"></script>
 </head>
 <script>
 	$(document).ready(function(){

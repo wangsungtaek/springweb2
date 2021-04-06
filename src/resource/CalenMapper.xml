@@ -15,20 +15,31 @@
 	
 	<insert id="insertCalendar" parameterType="calen">
 		INSERT INTO calendar
-		VALUES(cal_seq.nextval, '',
+		VALUES(cal_seq.nextval,
+				\]
+cal_seq.currval,
 			 	#{title}, #{writer}, #{content},
 			 	#{start},
 			 	#{end},
 				#{allDay}, #{textColor}, #{backgroundColor}, #{borderColor})
 	</insert>
 	
-	<update id="updateCalen" >
+	<update id="updateCalen" parameterType="calen">
 		UPDATE calendar
-			SET title = '',
-				start1 = '',
-				end1 = '',
-				content = '',
-				backgroundcolor = '',
-	
+			SET title = #{title},
+				start1 = #{start},
+				end1 = #{end},
+				content = #{content},
+				backgroundColor = #{backgroundColor},
+				textColor = #{textColor},
+				borderColor = #{borderColor},
+				allDay = #{allDay}
+		WHERE id=#{id}
 	</update>
+	
+	<delete id="deleteCalen" parameterType="int">
+		DELETE TABLE calendar
+		WHERE id = #{id}
+	</delete>
+	
 </mapper>
