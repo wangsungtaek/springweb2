@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb2/a00_com/bootstrap.min.css">
+<script type="text/javascript" src="/springweb2/a00_com/jquery-3.5.1.js"></script>
+<script src="/springweb2/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+/* 
+ex) v-model과 v-bind:속성을 활용하여
+	기본 template의 사원명과 직책명을 입력하면 하단에
+	해당 이름과 직책이 테이블로 출력되게 하세요.
+*/
+//
+   $(document).ready(function(){
+      var vm = new Vue({
+         el:".container",
+         data:{
+        		title:"예제",
+        		name:"",
+        		job:"2",
+        		align01:"center"
+         }
+      });
+   });
+</script>
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron text-center">
+			<h2 :align="align01" >{{title}}</h2>
+		</div>
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<form class="form-inline" method="post">
+				<input class="form-control mr-sm-2" type="text"
+					v-bind:value="name" v-model="name" placeholder="사원명">
+				<input class="form-control mr-sm-2" type="text"
+					v-bind:value="job" v-model="job" placeholder="직책">
+				<button class="btn btn-success" type="submit">Search</button>
+			</form>
+		</nav>
+		<table class="table table-hover table-striped">
+			<thead>
+				<tr class="table-success text-center">
+					<th>사원명</th>
+					<th>직책</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text-center">
+					<td v-text="name"></td>
+					<td>{{job}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb2/a00_com/jquery-ui.css" >
+<script src="/springweb2/a00_com/jquery-3.5.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+/*
+물건명		가격		갯수		계
+@@@@		[]		[]		@@@
+@@@@		[]		[]		@@@
+@@@@		[]		[]		@@@
+		총계 [	]
+ */
+	$(document).ready(function(){
+		var model = {price1:1000, cnt1:3,
+							price2:2000, cnt2:4,
+							price3:3000, cnt3:4,
+							};
+		var vm = new Vue({
+			el : "#product",
+			data : model
+		});
+	});
+</script>
+</head>
+<body>
+	<div id="product">
+		<table>
+			<tr>
+				<th>물건명</th><th>가격</th><th>갯수</th><th></th>
+			</tr>
+			<tr>
+				<td>사과</td>
+				<td><input v-model="price1"></td>
+				<td><input v-model="cnt1"></td>
+				<td>{{price1*cnt1}}</td>
+			</tr>
+			<tr>
+				<td>바나나</td>
+				<td><input v-model="price2"></td>
+				<td><input v-model="cnt2"></td>
+				<td>{{price2*cnt2}}</td>
+			</tr>
+			<tr>
+				<td>앵두</td>
+				<td><input v-model="price3"></td>
+				<td><input v-model="cnt3"></td>
+				<td>{{price3*cnt3}}</td>
+			</tr>
+			<tr>
+				<td colspan=3>{{(price1*cnt1)+(price2*cnt2)+(price3*cnt3)}}</td>
+			</tr>
+		
+		</table>
+	</div>
+</body>
+</html>

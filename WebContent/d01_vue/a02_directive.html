@@ -33,7 +33,7 @@
 			el:"#show01",
 			data:{greet:"안녕하세요",color:"노랑",
 					show:"<h2>반가워요</h2>",
-					name:"zz"}
+					name:"zz", price:1000, cnt:1}
 		});
 	});
 </script>
@@ -44,11 +44,14 @@
 		<h3 v-text="color"></h3>
 		<div v-html="show"></div>
 		<div v-text="show"></div>
-		이름:<input v-mode="name"/><br>
+		이름:<input v-model="name"/><br>
 		<h3>{{name}}</h3>
 		<h4>{{name}}</h4>
-		<h5>{{name}}</h5>
-		<h6>{{name}}</h6>
+		가격:<input v-model="price"/><br>
+		갯수:<input v-model="cnt"/><br>
+		<h4>가격:{{price}}</h4>
+		<h4>갯수:{{cnt}}</h4>
+		<h4>총계:{{price*cnt}}</h4>
 	</div>
 </body>
 </html>

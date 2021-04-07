@@ -32,6 +32,13 @@ job=직책명
 search=검색
 title=제목
 content=내용
+
+<spring:message code='ename'/>
+<spring:message code='job'/>
+<spring:message code='search'/>
+<spring:message code='title'/>
+<spring:message code='content'/>
+
 --%>
 //
 	$(document).ready(function(){
@@ -46,7 +53,7 @@ content=내용
 </head>
 <body>
 <div class="jumbotron text-center">
-	<h2>다국어 처리</h2>
+	<h2><spring:message code='multi_title'/></h2>
 	<h3><spring:message code="welcome"/></h3>
 	<select class="form-control" id="selectLan">
 		<option value=""><spring:message code="chlang"/></option>
@@ -59,11 +66,13 @@ content=내용
 		<form class="form-inline" method="post" action="${path}/">
 			<input class="form-control mr-sm-2" type="text" 
 			name="ename" value=""
-			placeholder="사원명">
+			placeholder="<spring:message code='ename'/>">
 			<input class="form-control mr-sm-2" type="text" 
 			name="job"  value=""
-			placeholder="직책명">
-			<button class="btn btn-success" type="submit">Search</button>
+			placeholder="<spring:message code='job'/>">
+			<button class="btn btn-success" type="submit">
+				<spring:message code='search'/>
+			</button>
 		</form>
 	</nav>
 	<table class="table table-hover">
@@ -74,7 +83,7 @@ content=내용
     </thead>
    	<tbody>
 		<tr class="text-center">
-			<td><spring:message code="title"/></td>
+			<td><spring:message code="content"/></td>
 		</tr>
 	</tbody>
 	</table>    
