@@ -19,8 +19,19 @@
 <script src="${path}/a00_com/jquery-ui.js"></script>
 <script type="text/javascript">
 <%--
- 
- 
+multi_title=MultiLanguage experience!!
+ename=Ename
+job=Job
+search=Search
+title=Title
+content=Content
+
+multi_title=다국어 처리!!
+ename=사원명
+job=직책명
+search=검색
+title=제목
+content=내용
 --%>
 //
 	$(document).ready(function(){
@@ -63,7 +74,7 @@
     </thead>
    	<tbody>
 		<tr class="text-center">
-			<td>내용</td>
+			<td><spring:message code="title"/></td>
 		</tr>
 	</tbody>
 	</table>    
