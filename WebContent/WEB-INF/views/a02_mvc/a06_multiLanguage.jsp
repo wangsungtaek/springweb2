@@ -86,7 +86,7 @@ content=내용
 			<td><spring:message code="content"/></td>
 		</tr>
 	</tbody>
-	</table>    
+	</table>
 </div>
 </body>
 </html>

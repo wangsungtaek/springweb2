@@ -1,0 +1,70 @@
+# 스프링 MVC로 개발하기..
+1. 요구사항
+	1) 리스트 처리
+	2) 상세화면
+	3) js(간트/대시보드)
+2. 화면 설계
+3. 출력할 데이터를 DB를 설계
+	1) 테이블 구성
+		- ERD 작성
+		화면에는 하나의 리스트나 입력내용이 나오지만,
+		데이터의 무결성과 효율성으로 테이블이 나누어지는 경우가 있다.
+		==> 
+4. 출력할 sql 작성
+	1) 테이블 하나로 처리가 가능할 때.
+		select * from 테이블
+	
+	2) 여러 개의 테이블을 조인해야 할 필요가 있을 때.
+		조인 조건을 기준으로 데이터를 처리..
+		select e.*, d.dname, d.loc
+		from emp e, dept d
+		where e.deptno = d.deptno;
+		
+	3) 입력/수정/삭제
+
+5. 위에 출력한 내용과 조건을 기준으로 VO/DTO를 작성.
+	1) 테이블 기준으로 VO작성하는 것이 아니라, sql의 select나
+		insert ,update ,delete의 사용될 데이터를 기준으로
+		vo를 작성하여야한다.
+6. 초기화면 구현
+	1) Controller
+		url매핑을 통해서 화면이 나오게 처리.
+	2) view - 초기 html css 구현
+
+7. controller의 처리
+	1) 요청값, 모델데이터 설정
+	2) 요청값이 무엇인지 판단 : 조회의 조건, 등록, 수정, 삭제..
+		- query string : 컨트롤러의 url?요청키=요청값&요청키=요청값
+		- form 하위에 name="요청키" value="요청값"
+		- location.href="컨트롤러?요청키=요청값";
+	3) 요청값을 controller의 메서드에 매개변수로
+		- @RequestParam("요청키") String 받는요청값;
+		- @RequestParam("요청키") int 받는요청값;
+		- VO객체를 통해서 받을 수 있게 처리
+			set요청키 : property 개념
+			ex) public String insert(Emp ins){}
+	4) 모델데이터 처리(dao, mapper.xml에서 처리 후 진행한다.)
+		- 기능메서드의 매개변수 선언
+			public String list(Emp sch, Model d) {}
+		- 화면에 전달할 핵심 데이터를 설정
+			d.addAttribute("key", 전달객체)
+
+8. 데이터 처리
+	1) sql을 확인하고, 입력(조회조건, insert, update, delete),
+		출력(select 이후에 출력할 컬럼리스트) 판단하여 VO에 할당하여,
+		VO작성 확인 후,
+	2) dao에 작성 public 리턴할객체 메서드명(입력할 객체);
+		ex) public ArrayList<Emp> empList(Emp sch);
+	3) 공통 할당할 VO의 alias 선언과 XXXMapper.xml
+		esource\mybatis.Spring.xml
+	4) XXMapper.xml을 활용하여
+		결과값 선언 : resultMap, 입력값 : parameterType을 통해서
+		<select 
+		
+9. Autowired를 통한 service단 선언과 dao호출,
+	controller에서 service단 호출과 model데이터를 설정 처리.
+		d.addAttribute("모델명", service.empList(sch));
+	1) service에서 요청값을 변경하거나 ,모델데이터를 수정처리할 때,
+		처리를 한다.
+		
+		

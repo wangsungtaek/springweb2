@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb2/a00_com/bootstrap.min.css">
+<script type="text/javascript" src="/springweb2/a00_com/jquery-3.5.1.js"></script>
+<script src="/springweb2/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+/*
+	ex) 물건가격:[  ] 물건갯수:[  ]
+		함수를 이용하여 총계를 바로 계산하여 출력하게 하세요
+ */
+
+	$(document).ready(function() {
+		var vm = new Vue({
+			el : ".container",
+			data : {
+				title : "총계",
+				price:0,
+				cnt:0
+			},
+			methods:{
+				sum:function(){
+					console.log("가격:"+this.price);
+					console.log("패스워드:"+this.cnt);
+					return this.price * this.cnt;
+				}
+			}
+		});
+	});
+</script>
+</head>
+<body>
+<div class="container">
+		<div class="jumbotron text-center">
+			<h2>{{title}}</h2>
+		</div>
+		<nav class="navbar navbar-expand-sm bg-dark navar-dark">
+			<form class="form-inline" method="post">
+				<input class="form-control mr-sm-2" type="text"
+					v-model="price" value="0"
+					placeholder="가격 입력">
+				<input class="form-control mr-sm-2" type="text"
+					v-model="cnt" value="0"
+					placeholder="갯수 입력">
+			</form>
+		</nav>
+		<table class="table table-hover table-striped">
+			<thead>
+				<tr class="table-success text-center">
+					<td>{{sum()}}</td>
+				</tr>
+			</thead>
+		</table>	
+	</div>
+</body>
+</html>

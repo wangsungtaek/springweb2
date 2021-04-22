@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb2/a00_com/bootstrap.min.css">
+<script type="text/javascript" src="/springweb2/a00_com/jquery-3.5.1.js"></script>
+<script src="/springweb2/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+/*
+1. 무지개 색상을 배열로 선언하고, 해당 색상으로 출력처리
+2. 단위객체를 book
+	제목, 출판사, 저자, 가격을 속성으로 설정하여
+	테이블로 출력하세요.
+ */
+   $(document).ready(function(){
+      var vm = new Vue({
+         el:".container",
+         data:{
+            title:"반복문 처리 v-for",
+            rainbow:["red","orange","yellow","green","blue","navy","purple"],
+            books:{title:"자기개발서",publisher:"남원출판사",auth:"김작가",price:10000}
+         }
+      });  
+   });
+</script>
+</head>
+<body>
+	<div class="container">
+		<h3 class="text-center">무지개</h3>
+		<h4 class="text-center" v-for="(color,idx) in rainbow">
+			{{idx+1}}번째 색 {{color}}
+		</h4>
+		<h4 v-for="(color,idx) in rainbow"
+			:style="{backgroundColor:color}" class="text-center" >
+			{{color}}
+		</h4>
+		
+		<h3 class="text-center">책정보</h3>
+		<table class="table table-hover table-striped">
+			<tbody>
+				<tr v-for="(book, pro) in books" class="text-center">
+					<th v-text="pro"></th><td>{{book}}</td>
+				</tr>
+			</tbody>
+		</table>
+			
+	</div>
+</body>

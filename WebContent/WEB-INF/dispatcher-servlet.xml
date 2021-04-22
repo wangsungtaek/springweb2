@@ -88,8 +88,6 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com"/>
 		<property name="port" value="587"/>
-		<!-- <property name="username" value="zelratole@gmail.com"/>
-		<property name="password" value="wpffkxhfm88"/> -->
 		<property name="username" value="gun235448@gmail.com"/>
 		<property name="password" value="see010811^^"/>
 		<!-- 보안 관련 설정 -->
@@ -113,5 +111,17 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- 1. 요청 핸들러 매핑 클래스와 어댑터 선언 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+	<!-- 2. 서블릿 핸들러를 선언하여 사용할 수 있게 선언 -->
+	<mvc:default-servlet-handler/>
+	<!-- 3. 소켓통신 핸들러 클래스 연동 처리..
+		wss://localhost:7080
+		/springweb/char-ws.do로 호출하면 해당 핸들러가 호출되어 사용될 수 있게 처리. -->
+	<websocket:handlers>
+		<websocket:mapping handler="chatHandler" path="/chat-ws.do"/>
+	</websocket:handlers>
 	
 </beans>
