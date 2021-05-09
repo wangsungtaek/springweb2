@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="springweb2.mvc.dao.A04_CalenDao">
+	
+	<resultMap type="calen" id="calMap">
+		<result property="start" column="start1"/>
+		<result property="end" column="end1"/>
+	</resultMap>
+	<select id="calenList" resultMap="calMap">
+		SELECT *
+		FROM calendar
+	</select>
+	
+	<insert id="insertCalendar" parameterType="calen">
+		INSERT INTO calendar
+		VALUES(cal_seq.nextval,
+				\]
+cal_seq.currval,
+			 	#{title}, #{writer}, #{content},
+			 	#{start},
+			 	#{end},
+				#{allDay}, #{textColor}, #{backgroundColor}, #{borderColor})
+	</insert>
+	
+	<update id="updateCalen" parameterType="calen">
+		UPDATE calendar
+			SET title = #{title},
+				start1 = #{start},
+				end1 = #{end},
+				content = #{content},
+				backgroundColor = #{backgroundColor},
+				textColor = #{textColor},
+				borderColor = #{borderColor},
+				allDay = #{allDay}
+		WHERE id=#{id}
+	</update>
+	
+	<delete id="deleteCalen" parameterType="int">
+		DELETE TABLE calendar
+		WHERE id = #{id}
+	</delete>
+	
+</mapper>
